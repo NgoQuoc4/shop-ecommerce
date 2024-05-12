@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { formatCurrency } from '../../utils/format';
 import { useDispatch } from 'react-redux';
 import { handleAddCart } from '../../store/reducers/cartReducer';
+import { handleAddWishList } from '../../store/reducers/authReducer';
 
 const ImageWrapper = styled.div`
   width: 100%;
@@ -30,6 +31,14 @@ const ProductCard = ({ product }) => {
         }
         dispatch(handleAddCart(addPayload));
     }
+
+    const _onAddWishList = (e) => {
+        e?.preventDefault();
+        const addPayload = {
+            product: id,
+        }
+        dispatch(handleAddWishList(addPayload));
+    }
     return (
         <div className="product product-2">
             <figure className="product-media">
@@ -52,7 +61,7 @@ const ProductCard = ({ product }) => {
                     }
                 </Link>
                 <div className="product-action-vertical">
-                    <a href="#" className="btn-product-icon btn-wishlist btn-expandable">
+                    <a href="#" onClick={_onAddWishList} className="btn-product-icon btn-wishlist btn-expandable">
                         <span>add to wishlist</span>
                     </a>
                 </div>

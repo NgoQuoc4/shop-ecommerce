@@ -1207,7 +1207,7 @@ blockquote.text-white cite span {
 .dropdown-cart-total .cart-total-price {
     font-size: 1.5rem;
     margin-left: auto;
-    color:#fcb941;
+    color: #fcb941;
 }
 
 .dropdown-cart-action {
@@ -1853,10 +1853,12 @@ blockquote.text-white cite span {
     .header-bottom {
         display: none;
     }
+
     .header-top {
-        padding:0.8rem 0;
+        padding: 0.8rem 0;
     }
-    .header{
+
+    .header {
         position: sticky;
         top: 0;
         z-index: 800;
@@ -1872,7 +1874,8 @@ blockquote.text-white cite span {
         flex: 0 0 180px;
         max-width: 180px;
     }
-    .logo{
+
+    .logo {
         margin-top: 2rem;
         margin-bottom: 2rem;
     }
@@ -3124,6 +3127,7 @@ p {
     letter-spacing: 0;
     color: #777;
 }
+
 .footer {
     width: 100%;
     font-weight: 300;
@@ -7586,13 +7590,14 @@ p {
 }
 
 .form-control:disabled,
-.form-control[readonly]{
+.form-control[readonly] {
     background: #e0e0e0;
 }
 
-.form-control.input-error{
+.form-control.input-error {
     border: 1px solid red;
 }
+
 select.form-control:not([size]):not([multiple]) {
     height: 40px;
 }
@@ -8848,16 +8853,18 @@ button:focus {
 }
 
 @media (max-width: 767px) {
-    .owl-full.carousel-with-shadow .owl-stage-outer{
+    .owl-full.carousel-with-shadow .owl-stage-outer {
         padding-left: 10px;
         padding-right: 0;
         margin-left: -10px;
         margin-right: -10px;
     }
-    .owl-nav{
+
+    .owl-nav {
         display: none;
     }
 }
+
 .carousel-with-shadow.owl-simple .owl-nav [class*="owl-"] {
     margin-top: -31px;
 }
@@ -11214,8 +11221,17 @@ button:focus {
     box-shadow: 0 1px 0 #fcb941;
 }
 
+.entry-content  {
+    display: -webkit-inline-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 .entry-content p {
     margin-bottom: 1.3rem;
+
 }
 
 .read-more {
@@ -12771,22 +12787,27 @@ button:focus {
     margin-top: 1rem;
     line-height: 1;
 }
-.contact-form .form-control{
+
+.contact-form .form-control {
     margin-bottom: 2.8rem;
 }
-.form-error{
+
+.form-error {
     font-size: 1.2rem;
     color: red;
 }
-.contact-form .form-error{
+
+.contact-form .form-error {
     line-height: 0;
     margin-top: -1.7rem;
 }
+
 .account-form .form-error,
 .checkout-form .form-error {
     line-height: 0;
     margin-bottom: 4px;
 }
+
 .contact-info {
     margin-bottom: 3rem;
 }
@@ -14045,7 +14066,8 @@ button:focus {
     padding: 4rem 2.8rem 2rem;
 }
 
-.error-content,.content-success {
+.error-content,
+.content-success {
     color: #777;
     font-weight: 400;
     font-size: 1.8rem;
@@ -14061,11 +14083,12 @@ button:focus {
 
 .error-content p,
 .content-success p {
-    margin:1rem auto 2.5rem auto;
+    margin: 1rem auto 2.5rem auto;
     max-width: 640px;
 }
 
-.error-title, .content-success .content-title {
+.error-title,
+.content-success .content-title {
     letter-spacing: -0.025em;
     margin-bottom: 1.4rem;
 }

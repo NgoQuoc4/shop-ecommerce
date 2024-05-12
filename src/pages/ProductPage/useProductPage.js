@@ -12,7 +12,6 @@ const useProductPage = () => {
     // query string set url
     const { search } = useLocation();
     const queryObject = queryString.parse(search);
-
     const [_, setSearchParams] = useSearchParams();
 
     // get data product
@@ -76,6 +75,7 @@ const useProductPage = () => {
         )
     }, [queryObject])
 
+
     const onSortChange = (sortType) => {
         const sortQueryObject = SORT_OPTIONS[sortType].queryObject;
         if (sortQueryObject) {
@@ -86,6 +86,7 @@ const useProductPage = () => {
             });
         }
     };
+
     const toolboxProps = {
         showNumb: products?.length || 0,
         totalNumb: productsPagi.total || 0,
@@ -104,6 +105,7 @@ const useProductPage = () => {
             newCategoryQuery = newCategoryQuery.filter(
                 (category) => category !== cateId);
         }
+
         if (!cateId) {
             newCategoryQuery = [];
         }

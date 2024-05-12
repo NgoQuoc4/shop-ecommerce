@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { cartService } from "../../services/cartService";
 import { message } from 'antd';
 import { sumArrayNumber } from "../../utils/calculate";
+import { authService } from "../../services/authService";
 
 const initialState = {
     cartInfo: {},
@@ -79,7 +80,6 @@ export const handleGetCart = createAsyncThunk(
     async (_, thunkApi) => {
         try {
             const cartRes = await cartService.getCart();
-            console.log("cartRes", cartRes)
             return cartRes.data?.data;
         } catch (error) {
             thunkApi.rejectWithValue(error);
@@ -109,11 +109,14 @@ export const handleAddCart = createAsyncThunk(
                 const newQuantity = [...(cartInfo.quantity ?? [])];
                 const newVariant = [...(cartInfo.variant ?? [])];
                 const newTotalProduct = [...(cartInfo.totalProduct ?? [])];
+
+                const matchColorIndex = newVariant?.findIndex(color => color === addedColor)
+
                 //end clone data 
-                if (matchIndex > -1 && newVariant[matchIndex] === addedColor) {
-                    newQuantity[matchIndex] = Number(newQuantity[matchIndex]) + Number(addedQuantity);
-                    newVariant[matchIndex] = addedColor;
-                    newTotalProduct[matchIndex] = Number(newTotalProduct[matchIndex]) + addedPrice * addedQuantity;
+                if (matchIndex > -1 && matchColorIndex > -1) {
+                    newQuantity[matchColorIndex] = Number(newQuantity[matchColorIndex]) + Number(addedQuantity);
+                    newVariant[matchColorIndex] = addedColor;
+                    newTotalProduct[matchColorIndex] = Number(newTotalProduct[matchColorIndex]) + addedPrice * addedQuantity;
                 } else {
                     newProduct.push(addedId);
                     newQuantity.push(addedQuantity);
@@ -148,7 +151,6 @@ export const handleAddCart = createAsyncThunk(
                 };
 
             }
-            console.log("addPayload", addPayload)
             const cartRes = await cartService.updateCart(addPayload);
             if (cartRes?.data?.data?.id) {
                 thunkApi.dispatch(handleGetCart());
@@ -196,7 +198,6 @@ export const handleRemoveFromCart = createAsyncThunk(
         } catch (error) {
             rejectWithValue(error);
             message.error("Remove from cart failed")
-            console.log("error", error);
         }
     }
 )
@@ -213,7 +214,6 @@ export const handleUpdateCart = createAsyncThunk(
         } catch (error) {
             rejectWithValue(error);
             message.error("Update cart failed!");
-            console.log("error", error);
             throw error;
         }
     }

@@ -11,6 +11,8 @@ const initialState = {
         login: false,
         register: false,
         getProfile: false,
+        add: false,
+        delete: false,
     },
 };
 
@@ -25,7 +27,6 @@ export const authSlice = createSlice({
             state.showedModal = "";
         },
         handleLogout: (state) => {
-            console.log("logout")
             tokenMethod.remove();
             state.profile = null;
             state.showedModal = "";
@@ -34,6 +35,7 @@ export const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            // handleRegister
             .addCase(handleRegister.fulfilled, (state) => {
                 state.loading.register = false;
             })
@@ -43,7 +45,7 @@ export const authSlice = createSlice({
             .addCase(handleRegister.rejected, (state) => {
                 state.loading.register = false;
             })
-
+            // handleLogin 
             .addCase(handleLogin.fulfilled, (state) => {
                 state.loading.login = false;
                 state.showedModal = "";
@@ -54,7 +56,7 @@ export const authSlice = createSlice({
             .addCase(handleLogin.rejected, (state) => {
                 state.loading.login = false;
             })
-
+            // handleGetProfile
             .addCase(handleGetProfile.fulfilled, (state, action) => {
                 state.profile = action.payload;
                 state.loading.getProfile = false;
@@ -64,7 +66,29 @@ export const authSlice = createSlice({
             })
             .addCase(handleGetProfile.rejected, (state) => {
                 state.loading.getProfile = false;
-            });
+            })
+
+            // handleAddWishList
+            .addCase(handleAddWishList.pending, (state) => {
+                state.loading.add = true;
+            })
+            .addCase(handleAddWishList.fulfilled, (state) => {
+                state.loading.add = false;
+            })
+            .addCase(handleAddWishList.rejected, (state) => {
+                state.loading.add = false;
+            })
+            // handleDeleteWishList
+            .addCase(handleDeleteWishList.pending, (state) => {
+                state.loading.delete = true;
+            })
+            .addCase(handleDeleteWishList.fulfilled, (state) => {
+                state.loading.delete = false;
+            })
+            .addCase(handleDeleteWishList.rejected, (state) => {
+                state.loading.delete = false;
+            })
+
     },
 });
 
@@ -141,23 +165,39 @@ export const handleGetProfile = createAsyncThunk(
     }
 );
 
-export const handleWishList = createAsyncThunk(
-    "auth/handleWishList",
+export const handleAddWishList = createAsyncThunk(
+    "auth/handleAddWishList",
     async (payload, thunkApi) => {
         try {
-            const registerRes = await authService.whitelistProfile(payload);
-            if (registerRes?.data?.data?.id) {
+            const wishListRes = await authService.whitelistProfile(payload);
+            if (wishListRes?.data?.data?.id) {
                 message.success("Add wish list successfully");
-                // thunkApi.dispatch();
-                return true;
+                thunkApi.dispatch(handleGetProfile());
             } else {
                 throw false;
             }
         } catch (error) {
             const errorInfo = error?.response?.data;
-            if (errorInfo.error === "Forbidden") {
-                message.error("dã thêm vào wish list");
+            message.error("Add wish list failed");
+            return thunkApi.rejectWithValue(errorInfo);
+        }
+    }
+);
+
+export const handleDeleteWishList = createAsyncThunk(
+    "auth/handleDeleteWishList",
+    async (payload, thunkApi) => {
+        try {
+            const deleteRes = await authService.deleteWhitelistProfile(payload);
+            if (deleteRes) {
+                message.success("Delete wish list successfully");
+                thunkApi.dispatch(handleGetProfile());
+            } else {
+                throw false;
             }
+        } catch (error) {
+            const errorInfo = error?.response?.data;
+            message.error("Delete wish list failed");
             return thunkApi.rejectWithValue(errorInfo);
         }
     }

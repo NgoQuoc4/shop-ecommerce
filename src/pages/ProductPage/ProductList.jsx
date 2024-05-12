@@ -2,6 +2,7 @@ import React from 'react'
 import { Empty, Skeleton } from 'antd';
 import styled from 'styled-components';
 import ProductCard from '../../components/ProductCard/ProductCard';
+import useDebounce from '../../hooks/useDebounce';
 
 const ProductSkeletonStyle = styled.div`
   display: flex;
@@ -11,15 +12,17 @@ const ProductSkeletonStyle = styled.div`
 `;
 
 const ProductList = ({ isLoading, isError, products }) => {
-    if ((!isLoading && products?.length < 1) || isError)
-        return (
-            <div className="products mb-3">
-                <div className="row justify-content-center">
-                    <Empty description="There is no products" />
-                </div>
-            </div>
-        );
-    if (isLoading) {
+    const loadingProduct = useDebounce(isLoading, 3000)
+
+    // if ((!isLoading && products?.length < 1) || isError)
+    //     return (
+    //         <div className="products mb-3">
+    //             <div className="row justify-content-center">
+    //                 <Empty description="There is no products" />
+    //             </div>
+    //         </div>
+    //     );
+    if (loadingProduct) {
         return (
             <div className="products mb-3">
                 <div className="row justify-content-center">

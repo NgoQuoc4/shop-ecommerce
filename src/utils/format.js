@@ -9,7 +9,7 @@ export const formatCurrency = (data, type = "vi-VN") => {
 };
 
 // ---- Format date to display with format ----//
-export const formatDate = (date, format = TIME_DISPLAYS.date) => {
+export const formatDate = (date, format = TIME_DISPLAYS.DATE) => {
     if (!!!date) return "";
     return moment(date).format(format);
 };

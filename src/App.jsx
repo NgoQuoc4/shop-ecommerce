@@ -30,6 +30,7 @@ import ListOrder from './pages/DashboardPage/ListOrder'
 import WishList from './pages/DashboardPage/WishList'
 import AddressAccount from './pages/DashboardPage/AddressAccount'
 import ChangePass from './pages/DashboardPage/ChangePass'
+import BlogSinglePage from './pages/BlogSinglePage'
 
 function App() {
   const dispatch = useDispatch();
@@ -62,6 +63,8 @@ function App() {
           <Route path={PATHS.SHIPPING} element={<ShippingPage />} />
 
           <Route path={PATHS.BLOG} element={<BlogPage />} />
+          <Route path={PATHS.BLOG_DETAIL} element={<BlogSinglePage />} />
+
           <Route path={PATHS.CONTACT} element={<ContactPage />} />
           <Route path={PATHS.ABOUT} element={<AboutPage />} />
           <Route path={PATHS.PRIVATE_POLICY} element={<PrivacyPolicyPage />} />

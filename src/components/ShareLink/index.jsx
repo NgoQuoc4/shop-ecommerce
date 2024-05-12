@@ -5,7 +5,7 @@ import {
     TwitterShareButton
 } from "react-share";
 
-const ShareLink = ({ path, title, type, children }) => {
+const ShareLink = ({ path, title, type, children, className }) => {
     switch (type) {
         case "twitter":
             return (
@@ -18,7 +18,7 @@ const ShareLink = ({ path, title, type, children }) => {
                     >
                         {children}
                     </a>
-                </TwitterShareButton>
+                </TwitterShareButton >
             );
         case "instagram":
             return (

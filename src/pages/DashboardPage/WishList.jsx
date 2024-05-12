@@ -1,10 +1,37 @@
 import React from 'react'
 import useMutation from '../../hooks/useMutation'
 import { authService } from '../../services/authService'
+import { useDispatch, useSelector } from 'react-redux';
+import { formatCurrency } from '../../utils/format';
+import PATHS from '../../constants/paths';
+import { Link } from 'react-router-dom';
+import { handleAddCart } from '../../store/reducers/cartReducer';
+import { handleDeleteWishList } from '../../store/reducers/authReducer';
 
 const WishList = () => {
+    const dispatch = useDispatch();
 
+    const _onAddToCar = (e, id, price, discount, color) => {
+        e?.preventDefault();
+        const addPayload = {
+            addedId: id,
+            addedColor: color?.[0] || "",
+            addedQuantity: 1,
+            addedPrice: price - discount,
+        }
+        dispatch(handleAddCart(addPayload));
+    }
+    const { profile } = useSelector((state) => state.auth);
+    const { whiteList } = profile || {};
 
+    const _onDeleteWishList = (e, id) => {
+        e?.preventDefault();
+        const addPayload = {
+            product: id,
+        }
+
+        dispatch(handleDeleteWishList(addPayload));
+    }
     return (
         <div className="tab-pane fade show active" id="tab-wishlist" role="tabpanel" aria-labelledby="tab-wishlist-link">
             <table className="table table-wishlist table-mobile">
@@ -18,86 +45,40 @@ const WishList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td className="product-col">
-                            <div className="product">
-                                <figure className="product-media">
-                                    <a href="#">
-                                        <img src="assets/images/demos/demo-3/products/product-4.jpg" alt="Product image" />
-                                    </a>
-                                </figure>
-                                <h3 className="product-title">
-                                    <a href="#">Beige knitted</a>
-                                </h3>
-                            </div>
-                        </td>
-                        <td className="price-col text-center">$84.00</td>
-                        <td className="stock-col text-center">
-                            <span className="in-stock">In stock</span>
-                        </td>
-                        <td className="action-col">
-                            <button className="btn btn-block btn-outline-primary-2">
-                                <i className="icon-cart-plus" />Add to Cart </button>
-                        </td>
-                        <td className="remove-col">
-                            <button className="btn-remove">
-                                <i className="icon-close" />
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td className="product-col">
-                            <div className="product">
-                                <figure className="product-media">
-                                    <a href="#">
-                                        <img src="assets/images/demos/demo-3/products/product-5.jpg" alt="Product image" />
-                                    </a>
-                                </figure>
-                                <h3 className="product-title">
-                                    <a href="#">Blue utility</a>
-                                </h3>
-                            </div>
-                        </td>
-                        <td className="price-col text-center">$76.00</td>
-                        <td className="stock-col text-center">
-                            <span className="in-stock">In stock</span>
-                        </td>
-                        <td className="action-col">
-                            <button className="btn btn-block btn-outline-primary-2">
-                                <i className="icon-cart-plus" />Add to Cart </button>
-                        </td>
-                        <td className="remove-col">
-                            <button className="btn-remove">
-                                <i className="icon-close" />
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td className="product-col">
-                            <div className="product">
-                                <figure className="product-media">
-                                    <a href="#">
-                                        <img src="assets/images/demos/demo-3/products/product-6.jpg" alt="Product image" />
-                                    </a>
-                                </figure>
-                                <h3 className="product-title">
-                                    <a href="#">Orange saddle lock</a>
-                                </h3>
-                            </div>
-                        </td>
-                        <td className="price-col text-center">$52.00</td>
-                        <td className="stock-col text-center">
-                            <span className="out-of-stock">Out of stock</span>
-                        </td>
-                        <td className="action-col">
-                            <button className="btn btn-block btn-outline-primary-2 disabled">Out of Stock</button>
-                        </td>
-                        <td className="remove-col">
-                            <button className="btn-remove">
-                                <i className="icon-close" />
-                            </button>
-                        </td>
-                    </tr>
+                    {whiteList?.map((product) => {
+                        const { id, images, name, price, stock, slug, discount, color } = product || {};
+                        const image = images[0]
+                        const productPath = PATHS.PRODUCTS + `/${slug}`;
+                        return (
+                            <tr key={id}>
+                                <td className="product-col">
+                                    <div className="product">
+                                        <figure className="product-media">
+                                            <Link to={productPath}>
+                                                <img src={`https://cfdshop.hn.ss.bfcplatform.vn/images/product/` + image} alt="Product image" />
+                                            </Link>
+                                        </figure>
+                                        <h3 className="product-title">
+                                            <Link to={productPath}>{name || ""}</Link>
+                                        </h3>
+                                    </div>
+                                </td>
+                                <td className="price-col text-center">${formatCurrency(price || "")}</td>
+                                <td className="stock-col text-center">
+                                    <span className="in-stock">{stock > 0 ? "In Stock" : "Out Stock"}</span>
+                                </td>
+                                <td className="action-col">
+                                    <button className="btn btn-block btn-outline-primary-2" onClick={(e) => _onAddToCar(e, id, price, discount, color)}>
+                                        <i className="icon-cart-plus" />Add to Cart </button>
+                                </td>
+                                <td className="remove-col">
+                                    <button className="btn-remove" onClick={(e) => _onDeleteWishList(e, id)} >
+                                        <i className="icon-close" />
+                                    </button>
+                                </td>
+                            </tr>
+                        )
+                    })}
                 </tbody>
             </table>
         </div>

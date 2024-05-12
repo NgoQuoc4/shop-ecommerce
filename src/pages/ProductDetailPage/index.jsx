@@ -11,8 +11,6 @@ import useProductDetailPage from './useProductDetailPage';
 
 const ProductDetailPage = () => {
     const { productName, productDetailTopProps, productDetailTabProps } = useProductDetailPage();
-    // console.log("productDetailTabProps", productDetailTabProps)
-    // console.log("productDetailTopProps", productDetailTopProps)
 
     return (
         <main className="main">

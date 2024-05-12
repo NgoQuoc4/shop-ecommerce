@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom';
 import PATHS from '../../constants/paths';
 import ShareLink from '../../components/ShareLink';
 import ProductImagesZoom from './ProductImagesZoom';
+import { useDispatch } from 'react-redux';
+import { handleAddWishList } from '../../store/reducers/authReducer';
 const ProductDetailsTop = ({
     reviews,
     id,
@@ -31,16 +33,18 @@ const ProductDetailsTop = ({
     const pathUrl = window.location.href;
     const categoryPath = category?.id && PATHS.PRODUCTS + `?category=${category?.id}`;
 
+
     const _onAddToCart = (e) => {
         e?.preventDefault();
         e?.stopPropagation();
         handleAddToCart();
     }
-    const _onAddToWishList = (e) => {
+    const _onAddWishList = (e) => {
         e?.preventDefault();
         e?.stopPropagation();
         handleAddToWishList();
     }
+
     return (
         <div className="product-details-top">
             <div className="row">
@@ -82,7 +86,7 @@ const ProductDetailsTop = ({
                                 <a href="#"
                                     className="btn-product btn-wishlist"
                                     title="Wishlist"
-                                    onClick={_onAddToWishList}
+                                    onClick={_onAddWishList}
                                 >
                                     <span>Add to Wishlist</span>
                                 </a>

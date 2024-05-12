@@ -22,7 +22,7 @@ export const authService = {
         return axiosInstance.post(`/customer/white-list`, payload)
     },
     deleteWhitelistProfile(payload = {}) {
-        return axiosInstance.delete(`/customer/white-list`, payload)
+        return axiosInstance.delete(`/customer/white-list`, { data: payload })
     },
     getDataProvince() {
         return axiosInstance.get(`/provinces`)

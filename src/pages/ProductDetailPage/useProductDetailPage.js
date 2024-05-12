@@ -5,6 +5,7 @@ import { productService } from '../../services/productService';
 import { message } from 'antd';
 import { useDispatch } from 'react-redux';
 import { handleAddCart } from '../../store/reducers/cartReducer';
+import { handleAddWishList } from '../../store/reducers/authReducer';
 
 const useProductDetailPage = () => {
     const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const useProductDetailPage = () => {
 
         if (!color) {
             message.error("Plese select color!")
+            return;
         } else if (isNaN(quantity) && quantity < 1) {
             message.error("Quantity must be greater than 1")
             return;
@@ -41,7 +43,6 @@ const useProductDetailPage = () => {
             addedQuantity: quantity,
             addedPrice: price - discount,
         }
-
         try {
             const res = dispatch(handleAddCart(addPayload)).unwrap();
             if (res) {
@@ -54,8 +55,15 @@ const useProductDetailPage = () => {
     };
 
     const handleAddToWishList = () => {
-        console.log("Add to wish list successfully");
-        message.success("Add to wish list successfully");
+        // add cart 
+        const addPayload = {
+            product: id,
+        }
+        try {
+            const res = dispatch(handleAddWishList(addPayload)).unwrap();
+        } catch (error) {
+            console.log("error", error);
+        }
     }
 
     const productDetailTopProps = {

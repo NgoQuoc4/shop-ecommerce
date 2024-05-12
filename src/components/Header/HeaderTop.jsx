@@ -11,6 +11,8 @@ const HeaderTop = () => {
     const dispatch = useDispatch();
     const { profile } = useSelector((state) => state.auth);
     const { firstName, email } = profile || {};
+    const pathWishList = `/profile/` + PATHS.PROFILE.PROFILE_WISHLIST
+    const pathOrder = `/profile/` + PATHS.PROFILE.PROFILE_ORDER
 
     const _onShowAuthModal = (e) => {
         e?.preventDefault();
@@ -59,8 +61,8 @@ const HeaderTop = () => {
                                 <li>
                                     <ul>
                                         <li><Link to={PATHS.PROFILE.INDEX}>Account Details</Link></li>
-                                        <li><Link to={PATHS.CART}>Your Orders</Link></li>
-                                        <li><Link to={PATHS.CART}>Wishlist <span>(3)</span></Link></li>
+                                        <li><Link to={pathOrder}>Your Orders</Link></li>
+                                        <li><Link to={pathWishList}>Wishlist <span>(3)</span></Link></li>
                                         <li><a href="#" onClick={(e) => _onSignOut(e)}>Sign Out</a></li>
                                     </ul>
                                 </li>

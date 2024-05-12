@@ -4,6 +4,7 @@ const PROFILE_ORDER = "profile/order";
 const PROFILE_ADDRESS = "profile/address";
 const PROFILE_WISHLIST = "profile/wishlist";
 const PROFILE_CHANGE_PASS = "profile/change-password";
+const BLOG_PATH = "/blog";
 const PATHS = {
     HOME: "/",
     PRODUCTS: PRODUCTS_PATH,
@@ -25,6 +26,7 @@ const PATHS = {
         PROFILE_CHANGE_PASS: PROFILE_CHANGE_PASS,
     },
     BLOG: "/blog",
+    BLOG_DETAIL: BLOG_PATH + "/:slug",
     CONTACT: "/contact",
     ABOUT: "/about",
 };

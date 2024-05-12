@@ -30,12 +30,7 @@ const FeaturedProductsSection = ({ categories, featuredProduct, selectedCateSlug
                             return (
                                 <li key={index} className="nav-item">
                                     <a className={cn("nav-link", { active: selectedCateSlug === slug })}
-                                        // id="top-tv-link"
-                                        // data-toggle="tab"
                                         href="#top-tv-tab"
-                                        // role="tab"
-                                        // aria-controls="top-tv-tab"
-                                        // aria-selected="false"
                                         onClick={(e) => _onSelectCate(e, slug)}
                                     >{name}</a>
                                 </li>

@@ -11,7 +11,7 @@ const CartPage = () => {
     const { cartTableProps, cartSummaryProps } = useCartPage();
     return (
         <main className="main">
-            <ThumbHero />
+            <ThumbHero page="Shopping Cart" />
             <BreadCrumb>
                 <BreadCrumb.Item>
                     <Link to={PATHS.HOME}>Home</Link>

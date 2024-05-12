@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { formatCurrency } from '../../utils/format'
 import { Modal } from 'antd';
 import ProductColor from '../../pages/ProductDetailPage/ProductColor'
+import tokenMethod from '../../utils/token'
 const DropdownContainer = styled.div`
     max-height: 30vh;
     overflow-y:scroll;
@@ -67,6 +68,7 @@ const HeaderDropdown = ({ products, total, shipping, handleRemoveProduct }) => {
     }
     return (
         <div className="dropdown cart-dropdown">
+
             <a href="#" className="dropdown-toggle"
                 role="button"
                 data-toggle="dropdown"
@@ -74,8 +76,12 @@ const HeaderDropdown = ({ products, total, shipping, handleRemoveProduct }) => {
                 aria-expanded="false"
                 data-display="static">
                 <i className="icon-shopping-cart" />
-                <span className="cart-count">{products?.length || 0}</span>
+                {tokenMethod.get()
+                    ? (<span className="cart-count">{products?.length || 0}</span>)
+                    : (<span className="cart-count">{0}</span>)}
             </a>
+
+
             <div className="dropdown-menu dropdown-menu-right" style={{ width: 400 }}>
                 {products?.length > 0 ? (
                     <>
